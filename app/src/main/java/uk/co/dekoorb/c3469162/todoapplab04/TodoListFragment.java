@@ -1,5 +1,6 @@
 package uk.co.dekoorb.c3469162.todoapplab04;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -70,6 +71,8 @@ public class TodoListFragment extends Fragment {
                     mTodo.getTitle() + " clicked",
                     Toast.LENGTH_SHORT)
                     .show();
+            Intent intent = TodoActivity.newIntent(getActivity(), mTodo.getId());
+            startActivity(intent);
         }
 
         public void bind(Todo todo){
