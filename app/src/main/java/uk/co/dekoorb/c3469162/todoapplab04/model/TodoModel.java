@@ -27,7 +27,7 @@ public class TodoModel {
     private TodoModel(Context context) {
         mTodoList = new ArrayList<>();
         // TODO >>>> remove this : for testing purposes only!
-        for (int i=0; i<10; i++) {
+        for (int i=0; i<3; i++) {
             Todo todo = new Todo();
             todo.setTitle("Todo_" + i);
             mTodoList.add(todo);

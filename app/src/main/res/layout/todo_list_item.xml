@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="todo" type="uk.co.dekoorb.c3469162.todoapplab04.model.Todo" />
+        <variable name="handler" type="uk.co.dekoorb.c3469162.todoapplab04.TodoListFragment.TodoItemClickHandler" />
+    </data>
+
+    <LinearLayout
+        android:padding="8dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="@{() -> handler.onTodoClicked(todo)}">
+
+        <TextView
+            android:id="@+id/todo_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Todo Title"
+            android:text="@{todo.title}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+        <TextView
+            android:id="@+id/todo_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{todo.date.toString()}"
+            tools:text="Tue 07 Nov 20:28:18 GMT+00:00 2017" />
+    </LinearLayout>
+</layout>

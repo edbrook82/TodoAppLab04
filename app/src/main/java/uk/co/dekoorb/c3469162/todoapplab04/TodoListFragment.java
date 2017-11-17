@@ -6,17 +6,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import uk.co.dekoorb.c3469162.todoapplab04.databinding.TodoListItemBinding;
 import uk.co.dekoorb.c3469162.todoapplab04.model.Todo;
 import uk.co.dekoorb.c3469162.todoapplab04.model.TodoModel;
 
@@ -54,39 +54,24 @@ public class TodoListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        List<Todo> todos = new ArrayList<>();
+        List<Todo> todos;
         TodoModel todoModel = TodoModel.get(getContext());
         todos = todoModel.getTodos();
         updateUI(todos);
     }
 
-    public class TodoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class TodoHolder extends RecyclerView.ViewHolder {
+        private TodoListItemBinding mBinding;
 
-        private Todo mTodo;
-        private TextView mTextViewTitle;
-        private TextView mTextViewDate;
-
-        public TodoHolder(LayoutInflater inflater, ViewGroup parent) {
-
-            super(inflater.inflate(R.layout.fragment_todo_list_item, parent, false));
-
-            itemView.setOnClickListener(this);
-
-            mTextViewTitle = (TextView) itemView.findViewById(R.id.todo_title);
-            mTextViewDate = (TextView) itemView.findViewById(R.id.todo_date);
-
-        }
-
-        @Override
-        public void onClick(View view) {
-            Intent intent = TodoActivity.newIntent(getActivity(), mTodo.getId());
-            startActivity(intent);
+        public TodoHolder(TodoListItemBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+            mBinding.setHandler(new TodoItemClickHandler());
         }
 
         public void bind(Todo todo){
-            mTodo = todo;
-            mTextViewTitle.setText(mTodo.getTitle());
-            mTextViewDate.setText(mTodo.getDate().toString());
+            mBinding.setTodo(todo);
+            mBinding.executePendingBindings();
         }
 
     }
@@ -102,7 +87,8 @@ public class TodoListFragment extends Fragment {
         @Override
         public TodoListFragment.TodoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            return new TodoHolder(layoutInflater, parent);
+            TodoListItemBinding binding = TodoListItemBinding.inflate(layoutInflater, parent, false);
+            return new TodoHolder(binding);
         }
 
         @Override
@@ -135,5 +121,12 @@ public class TodoListFragment extends Fragment {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public class TodoItemClickHandler {
+        public void onTodoClicked(Todo todo) {
+            Intent intent = TodoActivity.newIntent(getActivity(), todo.getId());
+            startActivity(intent);
+        }
     }
 }
