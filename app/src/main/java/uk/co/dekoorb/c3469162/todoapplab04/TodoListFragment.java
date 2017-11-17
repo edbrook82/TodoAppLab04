@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import uk.co.dekoorb.c3469162.todoapplab04.model.Todo;
@@ -46,6 +46,15 @@ public class TodoListFragment extends Fragment {
         mTodoRecyclerView.setAdapter(mTodoAdapter);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        List<Todo> todos = new ArrayList<>();
+        TodoModel todoModel = TodoModel.get(getContext());
+        todos = todoModel.getTodos();
+        updateUI(todos);
+    }
+
     public class TodoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private Todo mTodo;
@@ -65,12 +74,6 @@ public class TodoListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            // have a Toast for now
-            Toast.makeText(
-                    getActivity(),
-                    mTodo.getTitle() + " clicked",
-                    Toast.LENGTH_SHORT)
-                    .show();
             Intent intent = TodoActivity.newIntent(getActivity(), mTodo.getId());
             startActivity(intent);
         }

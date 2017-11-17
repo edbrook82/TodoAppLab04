@@ -31,14 +31,14 @@ public class TodoModel {
             Todo todo = new Todo();
             todo.setTitle("Todo_" + i);
             mTodoList.add(todo);
-            Log.d(TAG, "get: " + todo.toString());
+            Log.d(TAG, "get: " + todo.getId().toString() + " " + todo);
         }
         // TODO <<<<
     }
 
     public Todo getTodo(UUID todoId) {
         for (Todo todo : mTodoList) {
-            if (todo.getId() == todoId) {
+            if (todo.getId().equals(todoId)) {
                 return todo;
             }
         }

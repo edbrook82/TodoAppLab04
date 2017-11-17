@@ -13,12 +13,12 @@ public class TodoListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_todo_list);
 
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        Fragment fragment = fm.findFragmentById(R.id.master_fragment);
 
         if (fragment == null) {
             fragment = new TodoListFragment();
             fm.beginTransaction()
-                    .add(R.id.fragment_container, fragment)
+                    .add(R.id.master_fragment, fragment)
                     .commit();
         }
     }
