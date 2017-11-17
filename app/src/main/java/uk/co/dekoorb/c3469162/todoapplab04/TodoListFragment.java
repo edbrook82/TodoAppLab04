@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,6 +38,8 @@ public class TodoListFragment extends Fragment {
         mTodoRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         List<Todo> todos = TodoModel.get(getActivity()).getTodos();
+
+        setHasOptionsMenu(true);
 
         updateUI(todos);
 
@@ -113,5 +118,22 @@ public class TodoListFragment extends Fragment {
             }
             return mTodos.size();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_list_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_todo_action:
+                Intent intent = TodoActivity.newIntent(getActivity(), null);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

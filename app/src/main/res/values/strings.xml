@@ -9,4 +9,5 @@
 
     <string name="date_picker_title">Todo date:</string>
     <string name="new_todo">New Todo</string>
+    <string name="add">Add</string>
 </resources>
