@@ -1,47 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp"
-    android:weightSum="1">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        style="?android:listSeparatorTextViewStyle"
+    <data>
+        <variable name="todo" type="uk.co.dekoorb.c3469162.todoapplab04.model.Todo"/>
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/todo_title_label"/>
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:weightSum="1">
 
-    <EditText
-        android:id="@+id/todo_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/todo_title_hint"
-        android:textSize="24sp" />
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/todo_title_label"/>
 
-    <TextView
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="@android:dimen/notification_large_icon_height"
-        android:text="@string/todo_detail_label"/>
+        <EditText
+            android:id="@+id/todo_title"
+            android:text="@{todo.title}"
+            android:onTextChanged="@{todo::onTitleChanged}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/todo_title_hint"
+            android:textSize="24sp" />
 
-    <EditText
-        android:id="@+id/todo_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="todo detail" />
+        <TextView
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:text="@string/todo_detail_label"/>
 
-    <Button
-        android:id="@+id/btn_todo_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/todo_detail"
+            android:text="@{todo.detail}"
+            android:onTextChanged="@{todo::onDetailChanged}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="todo detail" />
 
-    <CheckBox
-        android:id="@+id/todo_complete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/todo_complete_label"/>
+        <Button
+            android:id="@+id/btn_todo_date"
+            android:text="@{todo.date.toString()}"
+            android:onClick="@{todo::onDateClicked}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-</LinearLayout>
+        <CheckBox
+            android:id="@+id/todo_complete"
+            android:checked="@{todo.complete}"
+            android:onClick="@{todo::onCompleteClicked}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/todo_complete_label"/>
+
+    </LinearLayout>
+</layout>

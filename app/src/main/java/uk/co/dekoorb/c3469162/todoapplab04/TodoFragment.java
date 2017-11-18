@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Date;
 import java.util.UUID;
 
 import uk.co.dekoorb.c3469162.todoapplab04.databinding.TodoItemBinding;
@@ -59,63 +58,8 @@ public class TodoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = TodoItemBinding.inflate(inflater, container, false);
-        mBinding.setHandler(new TodoHandler());
+//        mBinding.setHandler(new TodoHandler());
         mBinding.setTodo(mTodo);
         return mBinding.getRoot();
-    }
-
-//    private void setupListeners() {
-//        mTodoTitle.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                mTodo.setTitle(charSequence.toString());
-//                Log.d(TAG, "onTextChanged: ");
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {}
-//        });
-//
-//        mTodoDetail.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                mTodo.setDetail(charSequence.toString());
-//                Log.d(TAG, "onTextChanged: ");
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {}
-//        });
-//
-//        mTodoComplete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean complete) {
-//                mTodo.setComplete(complete);
-//            }
-//        });
-//
-//    }
-
-    public class TodoHandler {
-        public void onTitleChanged(Todo todo) {
-        }
-
-        public void onDetailChanged(Todo todo) {
-
-        }
-
-        public void onCompleteChanged(Todo todo) {
-
-        }
-
-        public void onDateClicked(Todo todo) {
-            todo.setDate(new Date());
-        }
     }
 }

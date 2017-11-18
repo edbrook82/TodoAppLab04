@@ -2,6 +2,8 @@ package uk.co.dekoorb.c3469162.todoapplab04.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.view.View;
+import android.widget.CheckBox;
 
 import java.util.Date;
 import java.util.UUID;
@@ -72,5 +74,21 @@ public class Todo extends BaseObservable {
     public void setComplete(boolean isComplete) {
         this.mIsComplete = isComplete;
         notifyPropertyChanged(BR.complete);
+    }
+
+    public void onDateClicked(View view) {
+        this.setDate(new Date());
+    }
+
+    public void onTitleChanged(CharSequence s, int start, int before, int count) {
+        this.setTitle(s.toString());
+    }
+
+    public void onDetailChanged(CharSequence s, int start, int before, int count) {
+        this.setDetail(s.toString());
+    }
+
+    public void onCompleteClicked(View view) {
+        setComplete(((CheckBox) view).isChecked());
     }
 }
