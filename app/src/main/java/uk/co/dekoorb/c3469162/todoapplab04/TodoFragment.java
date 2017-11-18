@@ -4,20 +4,14 @@ package uk.co.dekoorb.c3469162.todoapplab04;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 
 import java.util.Date;
 import java.util.UUID;
 
+import uk.co.dekoorb.c3469162.todoapplab04.databinding.TodoItemBinding;
 import uk.co.dekoorb.c3469162.todoapplab04.model.Todo;
 import uk.co.dekoorb.c3469162.todoapplab04.model.TodoModel;
 
@@ -26,16 +20,10 @@ import uk.co.dekoorb.c3469162.todoapplab04.model.TodoModel;
  */
 public class TodoFragment extends Fragment {
 
-    private static final String TAG = "TodoFragment";
-
     public static final String EXTRA_TODO_UUID = "todo_id";
 
-    private EditText mTodoTitle;
-    private EditText mTodoDetail;
-    private CheckBox mTodoComplete;
-    private Button mButtonDate;
-
     private Todo mTodo;
+    private TodoItemBinding mBinding;
 
     public static TodoFragment newInstance(UUID todoId) {
         TodoFragment todoFragment = new TodoFragment();
@@ -60,11 +48,8 @@ public class TodoFragment extends Fragment {
         }
 
         if (todoId != null) {
-            Log.d(TAG, "onCreate: EXITING TODO");
             mTodo = TodoModel.get(getContext()).getTodo(todoId);
-            Log.d(TAG, "onCreate: " + todoId + " -> " + mTodo);
         } else {
-            Log.d(TAG, "onCreate: NEW TODO");
             mTodo = new Todo();
             TodoModel.get(getContext()).addTodo(mTodo);
         }
@@ -73,66 +58,64 @@ public class TodoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_todo, container, false);
-
-        mTodoTitle = (EditText) view.findViewById(R.id.todo_title);
-        mTodoDetail = (EditText) view.findViewById(R.id.todo_detail);
-        mTodoComplete = (CheckBox) view.findViewById(R.id.todo_complete);
-        mButtonDate = (Button) view.findViewById(R.id.btn_todo_date);
-
-        mTodoTitle.setText(mTodo.getTitle());
-        mTodoDetail.setText(mTodo.getDetail());
-        mTodoComplete.setChecked(mTodo.isComplete());
-        mButtonDate.setText(mTodo.getDate().toString());
-
-        setupListeners();
-
-        return view;
+        mBinding = TodoItemBinding.inflate(inflater, container, false);
+        mBinding.setHandler(new TodoHandler());
+        mBinding.setTodo(mTodo);
+        return mBinding.getRoot();
     }
 
-    private void setupListeners() {
-        mTodoTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+//    private void setupListeners() {
+//        mTodoTitle.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                mTodo.setTitle(charSequence.toString());
+//                Log.d(TAG, "onTextChanged: ");
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {}
+//        });
+//
+//        mTodoDetail.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                mTodo.setDetail(charSequence.toString());
+//                Log.d(TAG, "onTextChanged: ");
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {}
+//        });
+//
+//        mTodoComplete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean complete) {
+//                mTodo.setComplete(complete);
+//            }
+//        });
+//
+//    }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mTodo.setTitle(charSequence.toString());
-                Log.d(TAG, "onTextChanged: ");
-            }
+    public class TodoHandler {
+        public void onTitleChanged(Todo todo) {
+        }
 
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
+        public void onDetailChanged(Todo todo) {
 
-        mTodoDetail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mTodo.setDetail(charSequence.toString());
-                Log.d(TAG, "onTextChanged: ");
-            }
+        public void onCompleteChanged(Todo todo) {
 
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
+        }
 
-        mTodoComplete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean complete) {
-                mTodo.setComplete(complete);
-            }
-        });
-
-        mButtonDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mTodo.setDate(new Date());
-                mButtonDate.setText(mTodo.getDate().toString());
-            }
-        });
+        public void onDateClicked(Todo todo) {
+            todo.setDate(new Date());
+        }
     }
-
 }
