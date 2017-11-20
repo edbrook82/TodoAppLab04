@@ -24,6 +24,11 @@ import uk.co.dekoorb.c3469162.todoapplab04.model.TodoModel;
 public class TodoListFragment extends Fragment {
     private RecyclerView mTodoRecyclerView;
 
+    public static TodoListFragment newInstance() {
+        TodoListFragment todoListFragment = new TodoListFragment();
+        return todoListFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,

@@ -16,7 +16,7 @@ public class TodoListActivity extends AppCompatActivity {
         Fragment fragment = fm.findFragmentById(R.id.master_fragment);
 
         if (fragment == null) {
-            fragment = new TodoListFragment();
+            fragment = TodoListFragment.newInstance();
             fm.beginTransaction()
                     .add(R.id.master_fragment, fragment)
                     .commit();
