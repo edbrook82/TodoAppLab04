@@ -2,14 +2,14 @@ package uk.co.dekoorb.c3469162.todoapplab04;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import java.util.UUID;
 
-public class TodoActivity extends AppCompatActivity {
+import uk.co.dekoorb.c3469162.todoapplab04.support.SingleFragmentActivity;
+
+public class TodoActivity extends SingleFragmentActivity {
 
     public static final String EXTRA_TODO_UUID = "todo:uuid";
 
@@ -23,17 +23,17 @@ public class TodoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
-
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.detail_fragment);
-
-        UUID uuid = (UUID) getIntent().getSerializableExtra(EXTRA_TODO_UUID);
-
-        if (fragment == null) {
-            fragment = TodoFragment.newInstance(uuid);
-            fm.beginTransaction()
-                    .add(R.id.detail_fragment, fragment)
-                    .commit();
-        }
     }
+
+    @Override
+    protected Fragment getFragment() {
+        UUID uuid = (UUID) getIntent().getSerializableExtra(EXTRA_TODO_UUID);
+        return TodoFragment.newInstance(uuid);
+    }
+
+    @Override
+    protected int getContainerId() {
+        return R.id.detail_fragment;
+    }
+
 }
