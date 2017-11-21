@@ -66,6 +66,7 @@ public class TodoFragment extends Fragment {
         } else {
             Log.d(TAG, "onCreate: NEW TODO");
             mTodo = new Todo();
+            TodoModel.get(getContext()).addTodo(mTodo);
         }
     }
 
